@@ -3,6 +3,38 @@ import { DealGET, DealPOST } from "./APIFunctions/DealApi";
 
 
 const apidata = {
+  "Create-Tables": {
+    name: "Create Table",
+    postFunction: DealPOST,
+    getFunction: DealGET,
+    form: {
+      buttonText: "Create Table",
+      inputs: [
+        {
+          type: "text",
+          name: "tableName",
+          label: "Table Name"
+        }
+
+      ]
+    }
+  },
+  "Drop-Tables": {
+    name: "Drop Table",
+    postFunction: DealPOST,
+    getFunction: DealGET,
+    form: {
+      buttonText: "Drop Table",
+      inputs: [
+        {
+          type: "text",
+          name: "tableName",
+          label: "Table Name"
+        }
+
+      ]
+    }
+  },
   "Add-Director": {
     name: "Add Director",
     postFunction: DealPOST,
@@ -93,15 +125,16 @@ const apidata = {
       buttonText: "Update Platform Id",
       inputs: [
         {
+          type: "text",
+          name: "username",
+          label: "Please provide a valid Username"
+        },    
+        
+        {
           type: "number",
           name: "platformId",
           label: "Please provide a valid Platform Id"
         },
-        {
-          type: "text",
-          name: "username",
-          label: "Please provide a valid Username"
-        },        
 
       ]
     }
