@@ -1,0 +1,56 @@
+.jsonviewer {
+    max-height: 400px;
+    overflow: auto;
+    background-color: #b7d7e8;
+
+    .jsonviewer-array-box {
+        padding: 10px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        height: auto;
+    }
+
+    .jsonviewer-object-box {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        background: -moz-linear-gradient(45deg, #d5f4e6 0%, #cfe0e8 99%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, #d5f4e6 0%,#cfe0e8 99%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(45deg, #d5f4e6 0%,#cfe0e8 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+        .jsonviewer-value-box {
+            display: flex;
+
+            .jsonviewer-key {
+                font-weight: bold;
+                margin: 5px;
+            }
+
+            .jsonviewer-value {
+                margin: 5px;
+            }
+        }
+    }
+}
+
+
+
+
+.jsonviewer::-webkit-scrollbar {
+    width: 8px;
+}
+
+.jsonviewer::-webkit-scrollbar-track {
+    background: #cfe0e8;
+}
+
+.jsonviewer::-webkit-scrollbar-thumb {
+    background: #615367;
+    border-radius: 5px;
+}
+
+.jsonviewer::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
