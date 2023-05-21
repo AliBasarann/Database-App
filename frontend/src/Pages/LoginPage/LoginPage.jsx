@@ -24,13 +24,13 @@ function LoginPage() {
                 type="email"
                 id="email"
                 label="E-mail"
-                {...register("email")}
+                {...register("email" , {required: true})}
             />
             <TextField
                 type="password"
                 id="password"
                 label="Password"
-                {...register("Password")}
+                {...register("Password", {required: true})}
             />
             <Button size="large" type='submit' variant="contained" color="primary">
                 Enter
