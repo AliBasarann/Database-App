@@ -41,7 +41,7 @@ function APIPage({ }) {
             <nav>
                 <NavBar></NavBar>
             </nav>
-            {apiData.name === "View Directors" ? <div></div> :
+            {["View Directors","View Director's Movies", "View Tickets"].includes(apiData.name) ?  <div></div> :
                 <div>
                     <h1 className='apipage-title'>
                         {apiData.name}
@@ -60,7 +60,8 @@ function APIPage({ }) {
             }
         </div>
         {console.log(apiData.Name)}
-        {["View Directors", "View Ratings", "View Movies", "View Movie Ratings"].includes(apiData.name) ? 
+        {["View Directors", "View Ratings", "View Movies", "View Movie Ratings", "View Available Theatres", "View Director's Movies",
+         "View Audiences", "View Tickets"].includes(apiData.name) ? 
             <div className='json-box'>
                 {/*
                 <div className='refresh-btn'>

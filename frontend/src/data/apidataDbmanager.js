@@ -152,7 +152,7 @@ const apidata = {
     postFunction: DealPOST,
     getFunction: DealGET,
     form: {
-      buttonText: "Get User Data",
+      buttonText: "Get Ratings",
       inputs: [
         {
           type: "text",
@@ -180,7 +180,7 @@ const apidata = {
   },
   "View-Movie-Ratings": {
     name: "View Movie Ratings",
-    dataTitle: "Get Ratings",
+    dataTitle: "Ratings",
     postFunction: DealPOST,
     getFunction: DealGET,
     form: {

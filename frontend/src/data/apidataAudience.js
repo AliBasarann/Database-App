@@ -3,53 +3,50 @@ import { DealGET, DealPOST } from "../APIFunctions/DealApi";
 
 
 const apidataAudience = {
-  "Create-Tables": {
-    name: "Create Table",
+  "Buy-Tickets": {
+    name: "Buy Tickets",
     postFunction: DealPOST,
     getFunction: DealGET,
     form: {
-      buttonText: "Create Table",
+      buttonText: "Buy Ticket",
       inputs: [
         {
-          type: "text",
-          name: "tableName",
-          label: "Table Name"
+          type: "number",
+          name: "sessionId",
+          label: "Session ID"
         }
 
       ]
     }
   },
-  "Add-Audience": {
-    name: "Add Audience",
+  "View-Tickets": {
+    name: "View Tickets",
+    dataTitle: "Tickets",
+    postFunction: DealPOST,
+    getFunction: DealGET,
+
+  },
+  "Rate-Sessions": {
+    name: "Rate Sessions",
     postFunction: DealPOST,
     getFunction: DealGET,
     form: {
-      buttonText: "Add Audience",
+      buttonText: "Rate",
       inputs: [
         {
-          type: "text",
-          name: "username",
-          label: "Username"
+          type: "number",
+          name: "sessionId",
+          label: "Session ID"
         },
         {
-          type: "text",
-          name: "name",
-          label: "Name"
-        },
-        {
-          type: "text",
-          name: "surname",
-          label: "Surname"
-        },
-        {
-          type: "text",
-          name: "password ",
-          label: "Password"
+          type: "number",
+          name: "rate",
+          label: "Rate"
         }
 
       ]
     }
-  }
+  },
 
 }
 
