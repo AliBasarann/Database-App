@@ -64,6 +64,11 @@ const apidata = {
         },
         {
           type: "text",
+          name: "ratingPlatforms ",
+          label: "Please Write Platforms with putting comma between"
+        },
+        {
+          type: "text",
           name: "nation ",
           label: "Nation"
         },
@@ -97,6 +102,11 @@ const apidata = {
           type: "text",
           name: "password ",
           label: "Password"
+        },
+        {
+          type: "text",
+          name: "ratingPlatforms ",
+          label: "Please Write Platforms with putting comma between"
         }
 
       ]
