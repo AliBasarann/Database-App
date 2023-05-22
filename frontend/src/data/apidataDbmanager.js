@@ -1,5 +1,5 @@
 
-import { DealGET, DealPOST } from "./APIFunctions/DealApi";
+import { DealGET, DealPOST } from "../APIFunctions/DealApi";
 
 
 const apidata = {

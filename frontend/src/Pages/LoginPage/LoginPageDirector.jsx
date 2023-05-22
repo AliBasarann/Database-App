@@ -11,8 +11,9 @@ function LoginPageDirector() {
     const onSubmit = ({ email, password }) => {
         localStorage.setItem("email", email)
         localStorage.setItem("password", password)
+        localStorage.setItem("type", "director")
         window.dispatchEvent(new Event('storage'))
-        navigate("/api")
+        navigate("/api/director")
     }
     const databaseManagerLogin = () => {
         navigate("/login")

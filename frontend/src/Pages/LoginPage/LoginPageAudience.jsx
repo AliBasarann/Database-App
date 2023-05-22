@@ -11,8 +11,9 @@ function LoginPageAudience() {
     const onSubmit = ({ email, password }) => {
         localStorage.setItem("email", email)
         localStorage.setItem("password", password)
+        localStorage.setItem("type", "audience")
         window.dispatchEvent(new Event('storage'))
-        navigate("/api")
+        navigate("/api/audience")
     }
     const databaseManagerLogin = () => {
         navigate("/login")

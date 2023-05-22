@@ -11,8 +11,9 @@ function LoginPage() {
     const onSubmit = ({ email, password }) => {
         localStorage.setItem("email", email)
         localStorage.setItem("password", password)
+        localStorage.setItem("type", "db-manager")
         window.dispatchEvent(new Event('storage'))
-        navigate("/api")
+        navigate("/api/db-manager")
     }
 
     const directorLogin = () => {
