@@ -46,7 +46,7 @@ function LoginPageDirector() {
             <Button size="large" type='submit' variant="contained" color="secondary" onClick= {databaseManagerLogin}>
                 Database Manager Login
             </Button>
-            <Button size="large" type='submit' variant="contained" color="secondary" onclick= {audienceLogin}>
+            <Button size="large" type='submit' variant="contained" color="secondary" onClick= {audienceLogin}>
                 Audience Login
             </Button>
     </div>;

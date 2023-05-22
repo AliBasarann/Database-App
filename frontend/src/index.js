@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     element: <MainContainer />,
     loader: ({ request }) => {
       if (new URL(request.url).pathname == "/") {
-        return redirect("/api")
+        return redirect("/login")
       } else {
         return null
 

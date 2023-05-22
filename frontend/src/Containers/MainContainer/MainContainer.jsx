@@ -9,6 +9,7 @@ function MainContainer() {
     const logout = async () => {
         await localStorage.removeItem("email");
         await localStorage.removeItem("password");
+        await localStorage.removeItem("type");
         window.dispatchEvent(new Event('storage'))
         navigate("/login")
     }
