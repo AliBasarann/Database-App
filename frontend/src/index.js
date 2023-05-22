@@ -14,6 +14,8 @@ import FormBuilder from './Components/FormBuilder/FormBuilder';
 import APIPage from './Pages/APIPage/APIPage';
 import apidata from './apidata';
 import LoginPage from './Pages/LoginPage/LoginPage';
+import LoginPageDirector from './Pages/LoginPage/LoginPageDirector';
+import LoginPageAudience from './Pages/LoginPage/LoginPageAudience';
 import NavBar from './Components/NavBar/NavBar';
 
 
@@ -45,7 +47,8 @@ const router = createBrowserRouter([
 
         loader: async ({ params }) => {
           const email = await localStorage.getItem("email");
-          if (!email) {
+          const password = await localStorage.getItem("password");
+          if (!email || !password) {
             return redirect("/login");
           } else {
             return apidata[params.name]
@@ -62,7 +65,15 @@ const router = createBrowserRouter([
       {
         path: "NavBar",
         element: <NavBar />
-      }
+      },
+      {
+        path: "director-login",
+        element: <LoginPageDirector />
+      },
+      {
+        path: "audience-login",
+        element: <LoginPageAudience />
+      },
     ]
   },
 

@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-function LoginPage() {
+function LoginPageAudience() {
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
     const onSubmit = ({ email, password }) => {
@@ -14,12 +14,11 @@ function LoginPage() {
         window.dispatchEvent(new Event('storage'))
         navigate("/api")
     }
-
+    const databaseManagerLogin = () => {
+        navigate("/login")
+    }
     const directorLogin = () => {
         navigate("/director-login")
-    }
-    const audienceLogin = () => {
-        navigate("/audience-login")
     }
 
     return <div className='login-page'>
@@ -43,14 +42,14 @@ function LoginPage() {
                 Enter
             </Button>
         </form>
-        <br/>
+            <br/>
+            <Button size="large" type='submit' variant="contained" color="secondary" onClick= {databaseManagerLogin}>
+                Database Manager Login
+            </Button>
             <Button size="large" type='submit' variant="contained" color="secondary" onClick= {directorLogin}>
                 Director Login
-            </Button>
-            <Button size="large" type='submit' variant="contained" color="secondary" onClick= {audienceLogin}>
-                Audience Login
             </Button>
     </div>;
 }
 
-export default LoginPage;
+export default LoginPageAudience;

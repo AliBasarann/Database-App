@@ -15,7 +15,7 @@ function MainContainer() {
 
     React.useEffect(() => {
         const storageListener = async () => {
-            setLogged(!!(await localStorage.getItem("email")));
+            setLogged(( await localStorage.getItem("password") && await localStorage.getItem("email") ));
         }
         window.addEventListener('storage', storageListener);
         return ()=>{
