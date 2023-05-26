@@ -1,5 +1,5 @@
 
-import { DealGET, DealPOST } from "./APIFunctions/DealApi";
+import { DealGET, DealPOST } from "../APIFunctions/DealApi";
 
 
 const apidata = {
@@ -64,6 +64,11 @@ const apidata = {
         },
         {
           type: "text",
+          name: "ratingPlatforms ",
+          label: "Please Write Platforms with putting comma between"
+        },
+        {
+          type: "text",
           name: "nation ",
           label: "Nation"
         },
@@ -97,6 +102,11 @@ const apidata = {
           type: "text",
           name: "password ",
           label: "Password"
+        },
+        {
+          type: "text",
+          name: "ratingPlatforms ",
+          label: "Please Write Platforms with putting comma between"
         }
 
       ]
@@ -152,7 +162,7 @@ const apidata = {
     postFunction: DealPOST,
     getFunction: DealGET,
     form: {
-      buttonText: "Get User Data",
+      buttonText: "Get Ratings",
       inputs: [
         {
           type: "text",
@@ -180,7 +190,7 @@ const apidata = {
   },
   "View-Movie-Ratings": {
     name: "View Movie Ratings",
-    dataTitle: "Get Ratings",
+    dataTitle: "Ratings",
     postFunction: DealPOST,
     getFunction: DealGET,
     form: {

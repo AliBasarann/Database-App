@@ -5,24 +5,22 @@ import Button from '@mui/material/Button'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-function LoginPage() {
+function LoginPageDirector() {
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
     const onSubmit = ({ email, password }) => {
         localStorage.setItem("email", email)
         localStorage.setItem("password", password)
-        localStorage.setItem("type", "db-manager")
+        localStorage.setItem("type", "director")
         window.dispatchEvent(new Event('storage'))
-        navigate("/api/db-manager")
+        navigate("/api/director")
     }
-
-    const directorLogin = () => {
-        navigate("/director-login")
+    const databaseManagerLogin = () => {
+        navigate("/login")
     }
     const audienceLogin = () => {
         navigate("/audience-login")
     }
-
     return <div className='login-page'>
         <span className='login-text'>
             Please write your email and password
@@ -44,9 +42,9 @@ function LoginPage() {
                 Enter
             </Button>
         </form>
-        <br/>
-            <Button size="large" type='submit' variant="contained" color="secondary" onClick= {directorLogin}>
-                Director Login
+            <br/>
+            <Button size="large" type='submit' variant="contained" color="secondary" onClick= {databaseManagerLogin}>
+                Database Manager Login
             </Button>
             <Button size="large" type='submit' variant="contained" color="secondary" onClick= {audienceLogin}>
                 Audience Login
@@ -54,4 +52,4 @@ function LoginPage() {
     </div>;
 }
 
-export default LoginPage;
+export default LoginPageDirector;

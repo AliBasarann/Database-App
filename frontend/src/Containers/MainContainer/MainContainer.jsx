@@ -9,13 +9,14 @@ function MainContainer() {
     const logout = async () => {
         await localStorage.removeItem("email");
         await localStorage.removeItem("password");
+        await localStorage.removeItem("type");
         window.dispatchEvent(new Event('storage'))
         navigate("/login")
     }
 
     React.useEffect(() => {
         const storageListener = async () => {
-            setLogged(!!(await localStorage.getItem("email")));
+            setLogged(( await localStorage.getItem("password") && await localStorage.getItem("email") ));
         }
         window.addEventListener('storage', storageListener);
         return ()=>{
