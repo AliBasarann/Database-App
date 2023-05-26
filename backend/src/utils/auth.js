@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
-import { getManagerByUsername } from "./db.js";
+import db from "./db.js";
 config();
 
 
@@ -18,7 +18,7 @@ const verifyToken = async (req,res,next) =>{
         var user;
         console.log(decoded);
         if (role == "manager") {
-          user = await getManagerByUsername(username);
+          user = await db.getManagerByUsername(username);
       
         }
         if (!user) {
