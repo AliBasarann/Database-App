@@ -125,6 +125,75 @@ async function getAverageRatingByMovie(movie_id) {
   const ratingResult = await pool.query(ratingQuery);
   return ratingResult.rows;
 }
+
+async function getTicketsByUsername(username) {
+  const query = `SELECT movies.movie_id, movie_name, tickets.session_id, rating, average_rating FROM tickets
+    INNER JOIN movie_sessions ON movie_sessions.session_id = tickets.session_id
+    INNER JOIN movies ON movies.movie_id = movie_sessions.movie_id
+    LEFT JOIN ratings ON ratings.username = tickets.username AND ratings.movie_id = movies.movie_id
+    WHERE tickets.username = '${username}'`;
+  const ticketsResult = await pool.query(query);
+  return ticketsResult.rows;
+}
+
+async function addTicketByUsernameAndSessionId(username, session_id) {
+  const query = `INSERT INTO Tickets (username, session_id) VALUES ('${username}', ${session_id})`;
+  const addTicketResult = await pool.query(query);
+}
+
+async function getPredecessorMovies(session_id) {
+  const query = `SELECT DISTINCT precedes.predecessor_movie_id FROM movie_sessions
+    INNER JOIN movies ON movies.movie_id = movie_sessions.movie_id
+    INNER JOIN precedes ON precedes.ancestor_movie_id = movies.movie_id
+    WHERE movie_sessions.session_id = ${session_id}`
+  const queryResult = await pool.query(query);
+  return queryResult.rows;
+}
+
+async function getPredecessorMoviesByMovieId(movie_id) {
+  const query = `SELECT predecessor_movie_id FROM precedes
+    WHERE ancestor_movie_id = ${movie_id}`
+  const queryResult = await pool.query(query);
+  return queryResult.rows;
+}
+
+async function getTicketsForMovieByUsername(username, movie_id) {
+  const query = `SELECT date, time_slot FROM tickets
+    INNER JOIN movie_sessions ON movie_sessions.session_id = tickets.session_id
+    WHERE movie_sessions.movie_id = ${movie_id} AND tickets.username = '${username}'`;
+    console.log(query);
+  const queryResult = await pool.query(query);
+  return queryResult.rows;
+}
+
+async function getSessionBySessionId(session_id) {
+  const query = `SELECT * FROM movie_sessions
+    INNER JOIN theatres ON theatres.theatre_id = movie_sessions.theatre_id
+    WHERE session_id = ${session_id}`;
+  const queryResult = await pool.query(query);
+  return queryResult.rows;
+}
+async function getMovieByMovieId(movie_id) {
+  const query = `SELECT * FROM movies WHERE movie_id = ${movie_id}`;
+  const queryResult = await pool.query(query);
+  return queryResult.rows[0];
+}
+async function getTicketCountBySessionId(session_id) {
+  const query = `SELECT COUNT(*) FROM tickets
+    WHERE session_id = ${session_id}`;
+  const queryResult = await pool.query(query);
+  return queryResult.rows;
+}
+
+async function getMovieSessions() {
+  const query = `SELECT movie_sessions.movie_id, movie_name, surname as "director's surname", platform_name, theatre_id, time_slot FROM movie_sessions
+    INNER JOIN movies ON movies.movie_id = movie_sessions.movie_id
+    INNER JOIN users ON users.username = movies.director_username
+    INNER JOIN directors ON directors.username = movies.director_username
+    INNER JOIN rating_platforms ON rating_platforms.platform_id = directors.platform_id`;
+    const queryResult = await pool.query(query);
+    return queryResult.rows;
+}
 export default {
   addAudience,
   addDirector,
@@ -136,6 +205,15 @@ export default {
   listDirectors,
   getRatings,
   getMovieSessionsByDirector,
-  getAverageRatingByMovie
+  getAverageRatingByMovie,
+  getTicketsByUsername,
+  addTicketByUsernameAndSessionId,
+  getPredecessorMovies,
+  getTicketsForMovieByUsername,
+  getSessionBySessionId,
+  getTicketCountBySessionId,
+  getMovieByMovieId,
+  getMovieSessions,
+  getPredecessorMoviesByMovieId
 };
 

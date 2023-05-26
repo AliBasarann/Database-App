@@ -123,7 +123,8 @@ CREATE TABLE Ratings(
 	FOREIGN KEY(movie_id) REFERENCES Movies
 		ON DELETE CASCADE,
 	FOREIGN KEY(username) REFERENCES Audiences
-		ON DELETE CASCADE
+		ON DELETE CASCADE,
+	CHECK (rating >= 0 AND rating <= 5)
 );
 
 -- Create table for Database_Managers relation
@@ -180,3 +181,57 @@ INSERT INTO Genres (genre_id, genre_name) VALUES (80006, 'Drama');
 INSERT INTO Database_Managers (username, password) VALUES ('manager1', 'managerpass1');
 INSERT INTO Database_Managers (username, password) VALUES ('manager2', 'managerpass2');
 INSERT INTO Database_Managers (username, password) VALUES ('manager35', 'managerpass35');
+
+INSERT INTO Users (username, name, password, surname) VALUES ('steven.jobs', 'Steven', 'apple123', 'Jobs');
+INSERT INTO Audiences (username) VALUES ('steven.jobs');
+
+INSERT INTO Users (username, name, password, surname) VALUES ('minion.lover', 'Felonius', 'bello387', 'Gru');
+INSERT INTO Audiences (username) VALUES ('minion.lover') ;
+
+INSERT INTO Users (username, name, password, surname) VALUES ('egemen.isguder', 'Egemen', 'deneme124', 'Isguder');
+INSERT INTO Audiences (username) VALUES ('egemen.isguder') ;
+
+INSERT INTO Rating_Platforms (platform_id, platform_name) VALUES (10130, 'IMDB');
+INSERT INTO Rating_Platforms (platform_id, platform_name) VALUES (10131, 'Letterboxd');
+
+INSERT INTO Subscriptions (username, platform_id) VALUES ('steven.jobs', 10130);
+INSERT INTO Subscriptions (username, platform_id) VALUES ('steven.jobs', 10131);
+INSERT INTO Subscriptions (username, platform_id) VALUES ('minion.lover', 10131);
+
+INSERT INTO Users (username) VALUES ('he.gongmin');
+INSERT INTO Directors (username, nation, platform_id) VALUES ('he.gongmin', 'Turkish', 10130);
+
+INSERT INTO Users (username) VALUES ('kron.helene');
+INSERT INTO Directors (username, nation, platform_id) VALUES ('kron.helene', 'French', 10131);
+
+INSERT INTO Users (username) VALUES ('kyle.balda');
+INSERT INTO Directors (username, nation, platform_id) VALUES ('kyle.balda', 'German', 10131);
+
+INSERT INTO Theatres (theatre_id, theatre_name, theatre_capacity, theatre_district) VALUES (40001, 'Sisli_1', 300, 'Sisli');
+INSERT INTO Theatres (theatre_id, theatre_name, theatre_capacity, theatre_district) VALUES (40003, 'Besiktas1', 100, 'Besiktas');
+INSERT INTO Theatres (theatre_id, theatre_name, theatre_capacity, theatre_district) VALUES (40004, 'Besiktas2', 100, 'Besiktas');
+
+
+INSERT INTO Genres (genre_id, genre_name) VALUES (80001, 'Animation');
+INSERT INTO Genres (genre_id, genre_name) VALUES (80002, 'Comedy');
+
+INSERT INTO Movies (movie_id, movie_name, average_Rating, duration, director_username) VALUES (20001, 'Despicable Me', 5,2, 'kyle.balda');
+INSERT INTO Movies (movie_id, movie_name, average_Rating, duration, director_username) VALUES (20005, 'Minions: The Rise of Gru', 5,1, 'kyle.balda');
+
+INSERT INTO Movie_Sessions (session_id, movie_id, theatre_id, time_slot, date) VALUES (50001,20001,40001,1,'2023-03-15');
+INSERT INTO Movie_Sessions (session_id, movie_id, theatre_id, time_slot, date) VALUES (50008,20005,40004,1,'2023-03-15');
+
+INSERT INTO Has_Genre (movie_id, genre_id) VALUES (20001, 80002);
+INSERT INTO Has_Genre (movie_id, genre_id) VALUES (20001, 80001);
+INSERT INTO Has_Genre (movie_id, genre_id) VALUES (20005, 80002);
+INSERT INTO Has_Genre (movie_id, genre_id) VALUES (20005, 80001);
+
+INSERT INTO Ratings (username, movie_id, rating) VALUES ('egemen.isguder', 20001, 5);
+INSERT INTO Ratings (username, movie_id, rating) VALUES ('egemen.isguder', 20005, 5);
+
+INSERT INTO Database_Managers (username, password) VALUES ('manager1', 'managerpass1');
+
+INSERT INTO Precedes (predecessor_movie_id, ancestor_movie_id) VALUES (20001, 20005);
+
+INSERT INTO Tickets (username, session_id) VALUES ('steven.jobs', 50001);
+INSERT INTO Tickets (username, session_id) VALUES ('egemen.isguder', 50008);
