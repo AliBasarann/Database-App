@@ -40,6 +40,17 @@ async function getManagerByUsername(username) {
   return result.rows[0];
 }
 
+async function getDirectoryByUsername(username) {
+  const query = `SELECT * FROM directors WHERE username='${username}'`;
+  const result = await pool.query(query);
+  return result.rows[0];
+}
+
+async function getAudienceByUsername(username) {
+  const query = `SELECT * FROM audiences WHERE username='${username}'`;
+  const result = await pool.query(query);
+  return result.rows[0];
+}
 async function addAudience(model) {
   const userQuery = `INSERT INTO Users (username, name, password, surname) VALUES ('${model.username}', '${model.name}', '${model.password}', '${model.surname}')`;
   const audienceQuery = `INSERT INTO Audiences (username) VALUES ('${model.username}');`
@@ -114,6 +125,8 @@ export default {
   addAudience,
   addDirector,
   getManagerByUsername,
+  getDirectoryByUsername,
+  getAudienceByUsername,
   deleteAudience,
   updatePlatformId,
   listDirectors,

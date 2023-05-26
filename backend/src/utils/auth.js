@@ -19,7 +19,10 @@ const verifyToken = async (req,res,next) =>{
         console.log(decoded);
         if (role == "manager") {
           user = await db.getManagerByUsername(username);
-      
+        } else if (role == "director") {
+          user = await db.getDirectoryByUsername(username);
+        } else {
+          user = await db.getAudienceByUsername(username);
         }
         if (!user) {
           return res.status(404).send({message: "User not found!"});
