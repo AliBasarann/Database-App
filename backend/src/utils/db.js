@@ -41,13 +41,17 @@ async function getManagerByUsername(username) {
 }
 
 async function getDirectoryByUsername(username) {
-  const query = `SELECT * FROM directors WHERE username='${username}'`;
+  const query = `SELECT * FROM directors
+    INNER JOIN users ON users.username = directors.username
+    WHERE users.username='${username}'`;
   const result = await pool.query(query);
   return result.rows[0];
 }
 
 async function getAudienceByUsername(username) {
-  const query = `SELECT * FROM audiences WHERE username='${username}'`;
+  const query = `SELECT * FROM audiences
+    INNER JOIN users ON users.username = audiences.username
+    WHERE users.username='${username}'`;
   const result = await pool.query(query);
   return result.rows[0];
 }
