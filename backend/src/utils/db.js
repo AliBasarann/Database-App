@@ -104,6 +104,12 @@ async function getMovieSessionsByDirector(username) {
   const movieSessionsResult = await pool.query(movieSessionsQuery);
   return movieSessionsResult.rows;
 }
+
+async function getAverageRatingByMovie(movie_id) {
+  const ratingQuery = `SELECT movie_id, movie_name, average_rating FROM movies WHERE movie_id = '${movie_id}'`;
+  const ratingResult = await pool.query(ratingQuery);
+  return ratingResult.rows;
+}
 export default {
   addAudience,
   addDirector,
@@ -112,6 +118,7 @@ export default {
   updatePlatformId,
   listDirectors,
   getRatings,
-  getMovieSessionsByDirector
+  getMovieSessionsByDirector,
+  getAverageRatingByMovie
 };
 

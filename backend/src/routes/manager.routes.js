@@ -153,5 +153,24 @@ router.get("/directors/movies", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/movies", verifyToken, async (req, res) => {
+  if (req.role != "manager") {
+    return res.status(401).send({message: "You dont have permission!"});
+  }
+  const movie_id = req.query.movie_id;
+  try {
+    if (!movie_id) {
+      return res.status(400).send({message:"Bad Request!"});
+    }
+    const movie = (await db.getAverageRatingByMovie(movie_id))[0];
+    if (!movie) {
+      return res.status(404).send({message:"Movie not found!"});
+    }
+    return res.send(movie);
+  } catch(e) {
+    return res.status(500).send({message: e});
+  }
+});
+
 
 export default router;
