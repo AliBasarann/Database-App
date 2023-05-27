@@ -194,6 +194,41 @@ async function getMovieSessions() {
     const queryResult = await pool.query(query);
     return queryResult.rows;
 }
+
+async function rateMovie(username, movie_id, rating) {
+  const query = `INSERT INTO Ratings (username, movie_id, rating) VALUES ('${username}', ${movie_id}, ${rating})`;
+  const queryResult = await pool.query(query);
+}
+
+async function checkIsSubscribed(username, platform_id) {
+  const query = `SELECT * FROM subscriptions WHERE username = '${username}' AND platform_id = ${platform_id}`;
+  const queryResult = await pool.query(query);
+  console.log(queryResult.rows);
+  if (queryResult.rowCount) {
+    return true;
+  }
+  return false;
+}
+async function checkHasTicket(username, movie_id) {
+  const query = `SELECT * FROM tickets
+    INNER JOIN movie_sessions ON movie_sessions.session_id = tickets.session_id
+    WHERE username = '${username}' AND movie_id = ${movie_id}`;
+  const queryResult = await pool.query(query);
+  console.log(queryResult.rows);
+  if (queryResult.rowCount) {
+    return true;
+  }
+  return false;
+}
+
+async function getPlatformOfMovieByMovieId(movie_id) {
+  const query = `SELECT platform_id FROM movies 
+    INNER JOIN directors ON directors.username = movies.director_username
+    WHERE movies.movie_id = '${movie_id}'`;
+  const queryResult = await pool.query(query);
+  console.log(queryResult.rows);
+  return queryResult.rows;
+}
 export default {
   addAudience,
   addDirector,
@@ -214,6 +249,10 @@ export default {
   getTicketCountBySessionId,
   getMovieByMovieId,
   getMovieSessions,
-  getPredecessorMoviesByMovieId
+  getPredecessorMoviesByMovieId,
+  rateMovie,
+  checkIsSubscribed,
+  getPlatformOfMovieByMovieId,
+  checkHasTicket
 };
 

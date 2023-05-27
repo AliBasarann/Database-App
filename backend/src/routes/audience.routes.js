@@ -72,7 +72,7 @@ router.post("/ticket", verifyToken, async (req, res) => {
     if (e.code == 23503 || e.code == 23505) {
       return res.status(400).send({message: e.detail});
     }
-    return res.status(500).send(e);
+    return res.status(500).send({message: e});
   }
 })
 
@@ -85,7 +85,7 @@ router.get("/ticket", verifyToken, async (req, res) => {
     const tickets = await db.getTicketsByUsername(username);
     return res.send(tickets);
   } catch (e) {
-    return res.status(500).send(e);
+    return res.status(500).send({message: e});
   }
 });
 
@@ -100,7 +100,40 @@ router.get("/movie_sessions", verifyToken, async (req, res) => {
     }
     return res.send(movies);
   } catch (e) {
-    return res.status(500).send(e);
+    return res.status(500).send({message: e});
   }
 });
+
+router.post("/rating", verifyToken, async (req, res) => {
+  if (req.role != "audience") {
+    return res.status(401).send({message: "You dont have permission!"});
+  }
+  const username = req.username;
+  const movie_id = req.query.movie_id;
+  const rating = req.query.rating;
+  try {
+    if (!username || !movie_id || !rating) {
+      return res.status(400).send({message: "Bad Request"});
+    }
+    const movie = await db.getMovieByMovieId(movie_id);
+    console.log(movie);
+    if (!movie) {
+      return res.status(404).send({message: "Movie does not exist!"});
+    }
+    if (!(await db.checkHasTicket(username, movie_id))) {
+      return res.status(400).send({message: "You should watch the movie!"});
+    }
+    const platformOfMovie = (await db.getPlatformOfMovieByMovieId(movie_id))[0].platform_id;
+    if (!(await db.checkIsSubscribed(username, platformOfMovie))) {
+      return res.status(400).send({message: "You should subscribe to the platform of the movie!"});
+    }
+    await db.rateMovie(username, movie_id, rating);
+    return res.send({message: "Rating is successful!"});
+  } catch (e) {
+    if (e.code == 23514) {
+      return res.status(400).send({message: "The rating range is 0-5"});
+    }
+    return res.status(500).send({message: e});
+  }
+})
 export default router;
