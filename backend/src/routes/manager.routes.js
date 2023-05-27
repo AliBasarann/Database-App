@@ -75,6 +75,10 @@ router.delete("/audiences",verifyToken, async (req, res) => {
     if (!username) {
       return res.status(400).send({message:"Bad Request!"});
     }
+    const audience = await db.getAudienceByUsername(username)
+    if(!audience){
+      return res.status(400).send({message:"Please give a valid audience username"});
+    }
     const result = await db.deleteAudience(username);
     if (!result) {
       return res.status(404).send({message: "User not found!"});

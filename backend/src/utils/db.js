@@ -301,6 +301,32 @@ async function getMoviesByDirector(username){
   const queryResult = await pool.query(query);
   return queryResult.rows;
 }
+
+async function getAudiencesByMovie(username, movie_id){
+  const query = `SELECT users.username, users.name, users.surname FROM movies
+  INNER JOIN movie_sessions on movies.movie_id = movie_sessions.movie_id
+  INNER JOIN tickets on tickets.session_id = movie_sessions.session_id
+  INNER JOIN users on users.username = tickets.username
+  WHERE director_username = '${username}' and movie_sessions.movie_id = ${movie_id}`;
+  const queryResult = await pool.query(query);
+  return queryResult.rows;
+}
+
+async function editMovieName(username, movie_id, movie_name){
+  const query =`UPDATE movies
+  SET movie_name = '${movie_name}'
+  WHERE director_username = '${username}' and movie_id = ${movie_id}`
+  await pool.query(query);
+}
+
+async function getMoviesByDate(date, theatre_id){
+  const query  = `SELECT * FROM movie_sessions
+  INNER JOIN movies on movies.movie_id = movie_sessions.movie_id
+  WHERE theatre_id = ${theatre_id} and date = '${date}'`
+  const queryResult = await pool.query(query);
+  return queryResult.rows;
+}
+
 export default {
   addAudience,
   addDirector,
@@ -330,5 +356,8 @@ export default {
   addMovie,
   addPredecessor,
   getMoviesByDirector,
+  getAudiencesByMovie,
+  editMovieName,
+  getMoviesByDate
 };
 
