@@ -33,7 +33,45 @@ export async function createTables() {
     process.exit(1);
   }
 }
+export async function createTrigger() {
+  const query = `CREATE OR REPLACE FUNCTION calculate_average_rating()
+  RETURNS TRIGGER AS
+$$
+DECLARE
+    count INTEGER;
+    sum REAL;
+    average REAL;
+BEGIN
+    SELECT COUNT(*) INTO count FROM ratings WHERE movie_id = COALESCE(NEW.movie_id, OLD.movie_id);
+    SELECT SUM(rating) INTO sum FROM ratings WHERE movie_id = COALESCE(NEW.movie_id, OLD.movie_id);
+    
+    IF count > 0 THEN
+        average := sum / count;
+    ELSE
+        average := 0;
+    END IF;
+    
+    UPDATE movies SET average_rating = average WHERE movie_id = COALESCE(NEW.movie_id, OLD.movie_id);
+    
+    RETURN NULL;
+END;
+$$
+LANGUAGE plpgsql;
 
+CREATE TRIGGER rating_trigger
+  AFTER INSERT OR DELETE ON ratings
+  FOR EACH ROW
+  EXECUTE FUNCTION calculate_average_rating();`
+  try {
+    await pool.query(query);
+  } catch(e) {
+    if (e.code != "42710") {
+      console.log("Failed to create trigger!");
+      process.exit(1);
+    }
+  }
+  console.log("Trigger created successfully (if not exists)");
+}
 async function getManagerByUsername(username) {
   const query = `SELECT * FROM database_managers WHERE username='${username}'`;
   const result = await pool.query(query);
