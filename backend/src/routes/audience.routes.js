@@ -130,7 +130,10 @@ router.post("/rating", verifyToken, async (req, res) => {
     await db.rateMovie(username, movie_id, rating);
     return res.send({message: "Rating is successful!"});
   } catch (e) {
-    if (e.code == 23514) {
+    if (e.code == 23505) {
+      return res.status(400).send({message: e.detail})
+    }
+    else if (e.code == 23514) {
       return res.status(400).send({message: "The rating range is 0-5"});
     }
     return res.status(500).send({message: e});
