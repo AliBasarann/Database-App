@@ -11,8 +11,8 @@ app.get('/',(req, res) => res.json({message: "Welcome!"}));
 app.use("/manager", managerRoutes);
 app.use("/audience", audienceRoutes);
 const port = process.env.PORT || 8080;
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`App started at http://localhost:${port}`);
-  createTables();
-  createTrigger();
+  await createTables();
+  await createTrigger();
 });
