@@ -48,9 +48,9 @@ const router = createBrowserRouter([
         path: "api/db-manager/:name",
 
         loader: async ({ params }) => {
-          const email = await localStorage.getItem("email");
-          const password = await localStorage.getItem("password");
-          if (!email || !password) {
+          const accessToken = localStorage.getItem("accessToken");
+          console.log(accessToken);
+          if (!accessToken) {
             return redirect("/login");
           } else {
             return apidata[params.name]
@@ -69,9 +69,7 @@ const router = createBrowserRouter([
         path: "api/audience/:name",
 
         loader: async ({ params }) => {
-          const email = await localStorage.getItem("email");
-          const password = await localStorage.getItem("password");
-          if (!email || !password) {
+          if (!localStorage.getItem("accessToken")) {
             return redirect("/login");
           } else {
             return apidataAudience[params.name]
@@ -90,9 +88,7 @@ const router = createBrowserRouter([
         path: "api/director/:name",
 
         loader: async ({ params }) => {
-          const email = await localStorage.getItem("email");
-          const password = await localStorage.getItem("password");
-          if (!email || !password) {
+          if (!localStorage.getItem("accessToken")) {
             return redirect("/login");
           } else {
             return apidataDirector[params.name]

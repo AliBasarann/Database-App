@@ -4,26 +4,18 @@ import "./MainContainer.scss";
 import Button from '@mui/material/Button'
 
 function MainContainer() {
-    const [logged, setLogged] = useState(!!localStorage.getItem("email"));
+    const [logged, setLogged] = useState(!!localStorage.getItem("accessToken"));
     const navigate = useNavigate();
     const logout = async () => {
-        await localStorage.removeItem("email");
-        await localStorage.removeItem("password");
-        await localStorage.removeItem("type");
+        localStorage.removeItem("accessToken");
         window.dispatchEvent(new Event('storage'))
         navigate("/login")
     }
 
     React.useEffect(() => {
-        const storageListener = async () => {
-            setLogged(( await localStorage.getItem("password") && await localStorage.getItem("email") ));
-        }
-        window.addEventListener('storage', storageListener);
-        return ()=>{
-            window.removeEventListener("storage", storageListener)
-        }
+        setLogged(localStorage.getItem("accessToken"));        
     }
-        , [])
+    , [localStorage.getItem("accessToken")])
 
     return <div className="main-container">
         {logged &&

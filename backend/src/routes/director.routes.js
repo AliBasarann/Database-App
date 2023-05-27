@@ -72,7 +72,7 @@ router.post("/movies",verifyToken, async (req, res) => {
         }
 
         for (let i = 0; i < duration ; i++){
-            if(!available_slots[time_slot+i-1] || time_slot+duration > 5){
+            if(time_slot+i < 5 && !available_slots[time_slot+i-1]){
                 return res.status(400).send({message:"The theatre you selected is not available at that time interval"});
             }
         }
@@ -81,7 +81,7 @@ router.post("/movies",verifyToken, async (req, res) => {
         await db.addMovie(username, req.body)
         return res.send({message: "Movie is added successfully"});
     } catch(e) {
-        if (e.code == 23505) {
+        if (e.code == 23505 || e.code == 23503) {
             return res.status(400).send({message: e.detail});
         }
         return res.status(500).send({message: e});
@@ -90,7 +90,7 @@ router.post("/movies",verifyToken, async (req, res) => {
     
 });
 
-router.put("/precedes",verifyToken, async (req, res) => {
+router.post("/precedes",verifyToken, async (req, res) => {
     if (req.role != "director") {
       return res.status(403).send({message: "You dont have permission!"});
     }
@@ -101,15 +101,10 @@ router.put("/precedes",verifyToken, async (req, res) => {
         if (!predecessor_movie_id || !ancestor_movie_id) {
             return res.status(400).send({message:"Bad Request!"});
         }
-        const movie1 = await db.getMovieByMovieId(predecessor_movie_id)
-        const movie2 = await db.getMovieByMovieId(ancestor_movie_id)
-        if(!movie1 || !movie2){
-            return res.status(400).send({message:"Please enter a valid movie id!"});
-        }
         await db.addPredecessor(predecessor_movie_id, ancestor_movie_id)
         return res.send({message: "Predecessor is added successfully"});
     } catch(e) {
-        if (e.code == 23505) {
+        if (e.code == 23505 || e.code == 23503) {
             return res.status(400).send({message: e.detail});
         }
         return res.status(500).send({message: e});
@@ -130,6 +125,7 @@ router.get("/movies" , verifyToken, async (req, res) => {
         
         for (let i = 0; i<movies.length; i++ ) {
             movies[i].predecessors_list = (await db.getPredecessorMoviesByMovieId(movies[i].movie_id)).map((pre) => pre.predecessor_movie_id).toString();
+            movies[i].date = movies[i].date.toLocaleString("en-US").split(",")[0];
         }
         return res.send(movies);
     }catch (e) {

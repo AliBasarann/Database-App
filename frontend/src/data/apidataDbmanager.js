@@ -1,5 +1,5 @@
 
-import { DealGET, DealPOST } from "../APIFunctions/DealApi";
+import { DealGET, DealPOST, addAudience, addDirector, deleteAudience, getDirectors, getMovieRating, getMoviesByDirector, getRatings, updatePlatformId } from "../APIFunctions/DealApi";
 
 
 const apidata = {
@@ -37,8 +37,7 @@ const apidata = {
   },
   "Add-Director": {
     name: "Add Director",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    postFunction: addDirector,
     form: {
       buttonText: "Add Director",
       inputs: [
@@ -58,18 +57,18 @@ const apidata = {
           label: "Surname"
         },
         {
-          type: "text",
+          type: "password",
           name: "password ",
           label: "Password"
         },
         {
           type: "text",
-          name: "ratingPlatforms ",
-          label: "Please Write Platforms with putting comma between"
+          name: "platform_id",
+          label: "Rating Platform"
         },
         {
           type: "text",
-          name: "nation ",
+          name: "nation",
           label: "Nation"
         },
 
@@ -78,8 +77,7 @@ const apidata = {
   },
   "Add-Audience": {
     name: "Add Audience",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    postFunction: addAudience,
     form: {
       buttonText: "Add Audience",
       inputs: [
@@ -99,13 +97,13 @@ const apidata = {
           label: "Surname"
         },
         {
-          type: "text",
+          type: "password",
           name: "password ",
           label: "Password"
         },
         {
           type: "text",
-          name: "ratingPlatforms ",
+          name: "ratingPlatforms",
           label: "Please Write Platforms with putting comma between"
         }
 
@@ -114,8 +112,7 @@ const apidata = {
   },
   "Delete-User": {
     name: "Delete User",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    postFunction: deleteAudience,
     form: {
       buttonText: "Delete User",
       inputs: [
@@ -129,8 +126,7 @@ const apidata = {
   },
   "Update-Platform-Id": {
     name: "Update Platform Id",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    postFunction: updatePlatformId,
     form: {
       buttonText: "Update Platform Id",
       inputs: [
@@ -142,7 +138,7 @@ const apidata = {
         
         {
           type: "number",
-          name: "platformId",
+          name: "platform_id",
           label: "Please provide a valid Platform Id"
         },
 
@@ -152,15 +148,13 @@ const apidata = {
   "View-Directors": {
     name: "View Directors",
     dataTitle: "Directors",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    getFunction: getDirectors,
 
   },
   "View-Ratings": {
     name: "View Ratings",
     dataTitle: "Ratings",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    getWithPostFunction: getRatings,
     form: {
       buttonText: "Get Ratings",
       inputs: [
@@ -175,8 +169,7 @@ const apidata = {
   "View-Movies": {
     name: "View Movies",
     dataTitle: "Movies",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    getWithPostFunction: getMoviesByDirector,
     form: {
       buttonText: "Get Movies",
       inputs: [
@@ -189,16 +182,15 @@ const apidata = {
     }
   },
   "View-Movie-Ratings": {
-    name: "View Movie Ratings",
+    name: "Get Average Rating",
     dataTitle: "Ratings",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    getWithPostFunction: getMovieRating,
     form: {
-      buttonText: "Get Ratings",
+      buttonText: "Get Average Rating",
       inputs: [
         {
           type: "text",
-          name: "movieId",
+          name: "movie_id",
           label: "Please provide a valid Movie Id"
         }
       ]
