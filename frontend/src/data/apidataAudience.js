@@ -1,18 +1,17 @@
 
-import { DealGET, DealPOST } from "../APIFunctions/DealApi";
+import { DealGET, DealPOST, buyTicket, getTickets, rateMovie, subscribePlatform } from "../APIFunctions/DealApi";
 
 
 const apidataAudience = {
   "Buy-Tickets": {
     name: "Buy Tickets",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    postFunction: buyTicket,
     form: {
       buttonText: "Buy Ticket",
       inputs: [
         {
           type: "number",
-          name: "sessionId",
+          name: "session_id",
           label: "Session ID"
         }
 
@@ -22,31 +21,43 @@ const apidataAudience = {
   "View-Tickets": {
     name: "View Tickets",
     dataTitle: "Tickets",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    getFunction: getTickets,
 
   },
-  "Rate-Sessions": {
-    name: "Rate Sessions",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+  "Rate-Movies": {
+    name: "Rate Movies",
+    postFunction: rateMovie,
     form: {
       buttonText: "Rate",
       inputs: [
         {
           type: "number",
-          name: "sessionId",
-          label: "Session ID"
+          name: "movie_id",
+          label: "Movie ID"
         },
         {
           type: "number",
-          name: "rate",
+          name: "rating",
           label: "Rate"
         }
 
       ]
     }
   },
+  "Subscribe-Platform": {
+    name: "Subscribe Platform",
+    postFunction: subscribePlatform,
+    form: {
+      buttonText: "Subscribe",
+      inputs: [
+        {
+          type: "number",
+          name: "platform_id",
+          label: "Platform ID"
+        }
+      ]
+    }
+  }
 
 }
 

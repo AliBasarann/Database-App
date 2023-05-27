@@ -1,7 +1,7 @@
 -- username is choosen as primary key of the relation since it is the only primary key.
 CREATE TABLE Users(username VARCHAR(30),
     name VARCHAR(30),
-    password VARCHAR(10),
+    password VARCHAR(50),
     surname VARCHAR(30),
     PRIMARY KEY (username));
 -- Create table for audiences relation. This relation represents audiences entity set in ER diagram.

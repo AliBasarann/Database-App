@@ -1,20 +1,24 @@
 
-import { DealGET, DealPOST } from "../APIFunctions/DealApi";
+import { DealGET, DealPOST, addMovieSession, addPredecessor, getAudiences, getAvailableTheatres, getDirectorMovies, updateMovieName } from "../APIFunctions/DealApi";
 
 
 const apidataDirector = {
   "View-Available-Theatres": {
     name: "View Available Theatres",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    getWithPostFunction: getAvailableTheatres,
     dataTitle: "Theatres",
     form: {
       buttonText: "View Available Theatres",
       inputs: [
         {
           type: "text",
-          name: "timeSlot",
+          name: "time_slot",
           label: "Time Slot"
+        },
+        {
+          type: "text",
+          name: "date",
+          label: "Date"
         }
 
       ]
@@ -23,30 +27,44 @@ const apidataDirector = {
 
   "Add-Movies": {
     name: "Add Movies",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    postFunction: addMovieSession,
     form: {
       buttonText: "Add Movie",
       inputs: [
         {
           type: "number",
-          name: "movieId",
+          name: "movie_id",
           label: "Movie ID"
         },
         {
           type: "text",
-          name: "movieName",
+          name: "movie_name",
           label: "Movie Name"
         },
         {
           type: "number",
-          name: "theatreId",
+          name: "theatre_id",
           label: "Theatre Id"
         },
         {
           type: "number",
-          name: "timeSlot",
+          name: "time_slot",
           label: "Time Slot"
+        },
+        {
+          type: "number",
+          name: "duration",
+          label: "Duration"
+        },
+        {
+          type: "text",
+          name: "date",
+          label: "Date"
+        },
+        {
+          type: "number",
+          name: "session_id",
+          label: "Session Id"
         }
 
       ]
@@ -54,19 +72,18 @@ const apidataDirector = {
   },
   "Add-Predecessors": {
     name: "Add Predecessors",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    postFunction: addPredecessor,
     form: {
       buttonText: "Add Predecessor",
       inputs: [
         {
           type: "number",
-          name: "predecessorMovieId",
+          name: "predecessor_movie_id",
           label: "Predecessor Movie ID"
         },
         {
           type: "number",
-          name: "ancestorMovieId",
+          name: "ancestor_movie_id",
           label: "Ancestor Movie ID"
         },
 
@@ -76,21 +93,19 @@ const apidataDirector = {
   "View-Director's-Movies": {
     name: "View Director's Movies",
     dataTitle: "Movies",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    getFunction: getDirectorMovies,
 
   },
   "View-Audiences": {
     name: "View Audiences",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    getWithPostFunction: getAudiences,
     dataTitle: "Audiences",
     form: {
       buttonText: "Get Audiences",
       inputs: [
         {
           type: "number",
-          name: "movieId",
+          name: "movie_id",
           label: "Movie ID"
         }
 
@@ -99,19 +114,18 @@ const apidataDirector = {
   },
   "Update-Movie-Name": {
     name: "Update Movie Name",
-    postFunction: DealPOST,
-    getFunction: DealGET,
+    postFunction: updateMovieName,
     form: {
       buttonText: "Update Movie Name",
       inputs: [
         {
           type: "number",
-          name: "movieId",
+          name: "movie_id",
           label: "Movie ID"
         },
         {
           type: "text",
-          name: "movieName",
+          name: "movie_name",
           label: "Movie Name"
         },
 

@@ -151,7 +151,7 @@ async function getRatings(username) {
 }
 
 async function getMovieSessionsByDirector(username) {
-  const movieSessionsQuery = `SELECT movies.movie_id, movie_name, theatres.theatre_id, theatre_district, time_slot FROM movie_sessions 
+  const movieSessionsQuery = `SELECT movies.movie_id, movie_name, theatres.theatre_id, theatre_district, date, time_slot FROM movie_sessions 
     INNER JOIN movies ON movies.movie_id = movie_sessions.movie_id
     INNER JOIN theatres ON theatres.theatre_id = movie_sessions.theatre_id WHERE movies.director_username = '${username}'`;
   const movieSessionsResult = await pool.query(movieSessionsQuery);
@@ -282,9 +282,12 @@ async function getTheatresByTimeSlot(time_slot, date){
 }
 
 async function addMovie(username, model){
-  const add_movie_query = `INSERT INTO movies (movie_id, movie_name, director_username, duration) VALUES (${model.movie_id}, '${model.movie_name}', '${username}', ${model.duration})`;
+  const movie = (await pool.query(`SELECT * FROM movies WHERE movie_id = ${model.movie_id}`)).rows[0];
+  if (!movie) {
+    const add_movie_query = `INSERT INTO movies (movie_id, movie_name, director_username, duration) VALUES (${model.movie_id}, '${model.movie_name}', '${username}', ${model.duration})`;
+    await pool.query(add_movie_query);
+  }
   const add_session_query = `INSERT INTO movie_sessions (session_id, time_slot, movie_id, date, theatre_id) VALUES (${model.session_id}, ${model.time_slot}, ${model.movie_id}, '${model.date}', ${model.theatre_id})`;
-  await pool.query(add_movie_query);
   await pool.query(add_session_query);
 }
 

@@ -71,6 +71,17 @@ function FormBuilder({ inputs, buttonText, onSubmit }) {
           />
         </div>
       }
+      else if (item.type == "password") {
+        return <div className='form-item' key={index}>
+          <TextField
+            fullWidth
+            type="password"
+            id="password"
+            label="Password"
+            {...register("password", {required: true})}
+          />
+        </div>
+      }
       if (item.type == "number") {
         return <div className='form-item' key={index}>
           <TextField

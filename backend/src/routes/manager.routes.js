@@ -150,7 +150,14 @@ router.get("/directors/movies", verifyToken, async (req, res) => {
     if (!username) {
       return res.status(400).send({message:"Bad Request!"});
     }
+    const director = await db.getDirectorByUsername(username);
+    if(!director) {
+      return res.status(400).send({message: "Director not found!"});
+    }
     const movies = await db.getMovieSessionsByDirector(username);
+    for (let i = 0; i<movies.length; i++) {
+      movies[i].date = movies[i].date.toLocaleString("en-US").split(",")[0];
+    }
     return res.send(movies);
   } catch(e) {
     return res.status(500).send({message: e});
