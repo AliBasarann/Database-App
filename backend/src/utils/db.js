@@ -78,7 +78,7 @@ async function getManagerByUsername(username) {
   return result.rows[0];
 }
 
-async function getDirectoryByUsername(username) {
+async function getDirectorByUsername(username) {
   const query = `SELECT * FROM directors
     INNER JOIN users ON users.username = directors.username
     WHERE users.username='${username}'`;
@@ -267,11 +267,45 @@ async function getPlatformOfMovieByMovieId(movie_id) {
   console.log(queryResult.rows);
   return queryResult.rows;
 }
+async function getTheatresByTimeSlot(time_slot, date){
+  const query = `SELECT theatre_id, theatre_district, theatre_capacity FROM theatres
+  WHERE theatre_id NOT IN(
+    SELECT theatres.theatre_id FROM theatres
+    INNER JOIN movie_sessions ON  movie_sessions.theatre_id = theatres.theatre_id 
+    WHERE movie_sessions.time_slot = ${time_slot} AND movie_sessions.date = '${date}'
+  )`
+  console.log(date)
+  const queryResult = await pool.query(query);
+  
+  console.log(queryResult.rows);
+  return queryResult.rows;
+}
+
+async function addMovie(username, model){
+  const add_movie_query = `INSERT INTO movies (movie_id, movie_name, director_username, duration) VALUES (${model.movie_id}, '${model.movie_name}', '${username}', ${model.duration})`;
+  const add_session_query = `INSERT INTO movie_sessions (session_id, time_slot, movie_id, date, theatre_id) VALUES (${model.session_id}, ${model.time_slot}, ${model.movie_id}, '${model.date}', ${model.theatre_id})`;
+  await pool.query(add_movie_query);
+  await pool.query(add_session_query);
+}
+
+async function addPredecessor(predecessor_movie_id, ancestor_movie_id){
+  const query = `INSERT INTO precedes (predecessor_movie_id, ancestor_movie_id) VALUES (${predecessor_movie_id}, ${ancestor_movie_id})`;
+  await pool.query(query);
+}
+
+async function getMoviesByDirector(username){
+  const query = `SELECT * FROM movies
+  INNER JOIN movie_sessions ON movie_sessions.movie_id = movies.movie_id 
+  WHERE director_username = '${username}'
+  ORDER BY movies.movie_id ASC`
+  const queryResult = await pool.query(query);
+  return queryResult.rows;
+}
 export default {
   addAudience,
   addDirector,
   getManagerByUsername,
-  getDirectoryByUsername,
+  getDirectorByUsername,
   getAudienceByUsername,
   deleteAudience,
   updatePlatformId,
@@ -291,6 +325,10 @@ export default {
   rateMovie,
   checkIsSubscribed,
   getPlatformOfMovieByMovieId,
-  checkHasTicket
+  checkHasTicket,
+  getTheatresByTimeSlot,
+  addMovie,
+  addPredecessor,
+  getMoviesByDirector,
 };
 

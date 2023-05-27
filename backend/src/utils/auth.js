@@ -20,7 +20,7 @@ const verifyToken = async (req,res,next) =>{
         if (role == "manager") {
           user = await db.getManagerByUsername(username);
         } else if (role == "director") {
-          user = await db.getDirectoryByUsername(username);
+          user = await db.getDirectorByUsername(username);
         } else {
           user = await db.getAudienceByUsername(username);
         }
