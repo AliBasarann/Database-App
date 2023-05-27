@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/ticket", verifyToken, async (req, res) => {
   if (req.role != "audience") {
-    return res.status(401).send({message: "You dont have permission!"});
+    return res.status(403).send({message: "You dont have permission!"});
   }
   const username = req.username;
   const session_id = req.query.session_id;
@@ -78,7 +78,7 @@ router.post("/ticket", verifyToken, async (req, res) => {
 
 router.get("/ticket", verifyToken, async (req, res) => {
   if (req.role != "audience") {
-    return res.status(401).send({message: "You dont have permission!"});
+    return res.status(403).send({message: "You dont have permission!"});
   }
   const username = req.username;
   try {
@@ -91,7 +91,7 @@ router.get("/ticket", verifyToken, async (req, res) => {
 
 router.get("/movie_sessions", verifyToken, async (req, res) => {
   if (req.role != "audience") {
-    return res.status(401).send({message: "You dont have permission!"});
+    return res.status(403).send({message: "You dont have permission!"});
   }
   try {
     const movies = await db.getMovieSessions();
@@ -106,7 +106,7 @@ router.get("/movie_sessions", verifyToken, async (req, res) => {
 
 router.post("/rating", verifyToken, async (req, res) => {
   if (req.role != "audience") {
-    return res.status(401).send({message: "You dont have permission!"});
+    return res.status(403).send({message: "You dont have permission!"});
   }
   const username = req.username;
   const movie_id = req.query.movie_id;
