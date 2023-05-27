@@ -139,4 +139,24 @@ router.post("/rating", verifyToken, async (req, res) => {
     return res.status(500).send({message: e});
   }
 })
+
+router.post("/platform", verifyToken, async (req, res) => {
+  if (req.role != "audience") {
+    return res.status(403).send({message: "You dont have permission!"});
+  }
+  const username = req.username;
+  const platform_id = req.body.platform_id;
+  try {
+    if(!platform_id){
+      return res.status(400).send({message: "Bad Request"});
+    }
+    await db.addSubscription(username, platform_id);
+    return res.send({"message": "Platform is subscribed successfully"} );
+  } catch (e) {
+    if(e.code == 23503 || e.code == 23505){
+      return res.status(400).send({"message": e.detail})
+    }
+    return res.status(500).send({message: e});
+  }
+});
 export default router;

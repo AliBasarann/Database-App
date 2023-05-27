@@ -327,6 +327,9 @@ async function getMoviesByDate(date, theatre_id){
   return queryResult.rows;
 }
 
+async function addSubscription(username, platform_id){
+  const query = `INSERT INTO Subscriptions (username, platform_id) VALUES ('${username}', '${platform_id}')`
+}
 export default {
   addAudience,
   addDirector,
