@@ -47,6 +47,9 @@ export async function addDirector(body) {
 
 export async function addAudience(body) {
     body.ratingPlatforms = body.ratingPlatforms.split(",");
+    if (body.ratingPlatforms[0] == "" || body.ratingPlatforms[0] == " ") {
+        body.ratingPlatforms=[];
+    }
     const response = await axios.post(getAPIUrl() + "/manager/audiences", body, {headers: {Authorization: localStorage.getItem("accessToken")}});
     console.log(response);
     return response;
@@ -114,6 +117,10 @@ export async function getAvailableTheatres(body) {
 export async function addMovieSession(body) {
     body.time_slot = +body.time_slot;
     body.duration = +body.duration;
+    body.genres = body.genres.split(",");
+    if (body.genres[0] == "" || body.genres[0] == " ") {
+        body.genres=[];
+    }
     const response = await axios.post(getAPIUrl() + `/director/movies`, body, {headers: {Authorization: localStorage.getItem("accessToken")}});
     console.log(response);
     return response;

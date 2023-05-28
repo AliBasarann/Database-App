@@ -39,7 +39,7 @@ const apidataDirector = {
         {
           type: "text",
           name: "movie_name",
-          label: "Movie Name"
+          label: "Movie Name (if movie with Movie ID exists, leave blank this field)"
         },
         {
           type: "number",
@@ -54,7 +54,7 @@ const apidataDirector = {
         {
           type: "number",
           name: "duration",
-          label: "Duration"
+          label: "Duration (if movie with Movie ID exists, leave blank this field)"
         },
         {
           type: "text",
@@ -65,6 +65,11 @@ const apidataDirector = {
           type: "number",
           name: "session_id",
           label: "Session Id"
+        },
+        {
+          type: "text",
+          name: "genres",
+          label: "Please Write genre ids with putting comma between (if movie with Movie ID exists, leave blank this field)"
         }
 
       ]

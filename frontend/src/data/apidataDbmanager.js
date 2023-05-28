@@ -72,7 +72,7 @@ const apidata = {
         {
           type: "text",
           name: "ratingPlatforms",
-          label: "Please Write Platforms with putting comma between"
+          label: "Please Write Platforms with putting comma between (if a rating platform is invalid, it will be ignored)"
         }
 
       ]

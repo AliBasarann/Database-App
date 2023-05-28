@@ -60,8 +60,26 @@ router.post("/movies",verifyToken, async (req, res) => {
         const duration = req.body.duration;
         const date = req.body.date;
         const session_id = req.body.session_id;
-        if (!movie_id || !movie_name || !theatre_id || !time_slot || !duration || !date || !session_id) {
-            return res.status(400).send({message:"Bad Request!"});
+        const genres = req.body.genres;
+        if (!movie_id || !session_id || !date || !time_slot || !theatre_id) {
+            console.log(movie_id, session_id, date,time_slot,theatre_id)
+            return res.status(400).send({message: "Bad Request!"});
+        }
+        const movie = await db.getMovieByMovieId(movie_id);
+        if (!movie) {
+            if (!movie_name || !duration) {
+                return res.status(400).send({message:"Bad Request!"});
+            }
+            if (!genres || genres.length==0) {
+                return res.status(400).send({message: "A movie should have at least one genre!"});
+            }
+            var genre;
+            for (let i = 0; i<genres.length; i++) {
+                genre = db.getGenre(genres[i]);
+                if (!genre) {
+                    return res.status(400).send({message: `${genres[i]} is not a valid genre id!`});
+                }
+            }
         }
         const movies = await db.getMoviesByDate(date, theatre_id);
         var available_slots = [true, true, true, true]

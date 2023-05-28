@@ -286,6 +286,11 @@ async function addMovie(username, model){
   if (!movie) {
     const add_movie_query = `INSERT INTO movies (movie_id, movie_name, director_username, duration) VALUES (${model.movie_id}, '${model.movie_name}', '${username}', ${model.duration})`;
     await pool.query(add_movie_query);
+    var add_hasGenre_query;
+    for (let i = 0; i<model.genres.length; i++) {
+      add_hasGenre_query = `INSERT INTO Has_Genre (movie_id, genre_id) VALUES (${model.movie_id}, ${model.genres[i]})`;
+      await pool.query(add_hasGenre_query);
+    }
   }
   const add_session_query = `INSERT INTO movie_sessions (session_id, time_slot, movie_id, date, theatre_id) VALUES (${model.session_id}, ${model.time_slot}, ${model.movie_id}, '${model.date}', ${model.theatre_id})`;
   await pool.query(add_session_query);
@@ -334,6 +339,12 @@ async function addSubscription(username, platform_id){
   const query = `INSERT INTO Subscriptions (username, platform_id) VALUES ('${username}', '${platform_id}')`
   const queryResult = await pool.query(query);
 }
+
+async function getGenre(genre_id) {
+  const query = `SELECT * FROM genres WHERE genre_id = ${genre_id}`;
+  const queryResult = await pool.query(query);
+  return queryResult.rows[0];
+}
 export default {
   addAudience,
   addDirector,
@@ -366,6 +377,7 @@ export default {
   getAudiencesByMovie,
   editMovieName,
   getMoviesByDate,
-  addSubscription
+  addSubscription,
+  getGenre
 };
 
