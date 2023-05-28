@@ -86,7 +86,7 @@ function FormBuilder({ inputs, buttonText, onSubmit }) {
         return <div className='form-item' key={index}>
           <TextField
             fullWidth
-            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+            inputProps={{ inputMode: 'numeric', pattern: '([0-9]*[.])?[0-9]+' }}
             key={item.name}
             id={item.name}
             label={item.label}
