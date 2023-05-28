@@ -3,38 +3,6 @@ import { DealGET, DealPOST, addAudience, addDirector, deleteAudience, getDirecto
 
 
 const apidata = {
-  "Create-Tables": {
-    name: "Create Table",
-    postFunction: DealPOST,
-    getFunction: DealGET,
-    form: {
-      buttonText: "Create Table",
-      inputs: [
-        {
-          type: "text",
-          name: "tableName",
-          label: "Table Name"
-        }
-
-      ]
-    }
-  },
-  "Drop-Tables": {
-    name: "Drop Table",
-    postFunction: DealPOST,
-    getFunction: DealGET,
-    form: {
-      buttonText: "Drop Table",
-      inputs: [
-        {
-          type: "text",
-          name: "tableName",
-          label: "Table Name"
-        }
-
-      ]
-    }
-  },
   "Add-Director": {
     name: "Add Director",
     postFunction: addDirector,

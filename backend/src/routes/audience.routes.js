@@ -151,6 +151,7 @@ router.post("/platform", verifyToken, async (req, res) => {
       return res.status(400).send({message: "Bad Request"});
     }
     await db.addSubscription(username, platform_id);
+    console.log("h");
     return res.send({"message": "Platform is subscribed successfully"} );
   } catch (e) {
     if(e.code == 23503 || e.code == 23505){

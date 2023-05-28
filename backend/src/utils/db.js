@@ -332,6 +332,7 @@ async function getMoviesByDate(date, theatre_id){
 
 async function addSubscription(username, platform_id){
   const query = `INSERT INTO Subscriptions (username, platform_id) VALUES ('${username}', '${platform_id}')`
+  const queryResult = await pool.query(query);
 }
 export default {
   addAudience,
@@ -364,6 +365,7 @@ export default {
   getMoviesByDirector,
   getAudiencesByMovie,
   editMovieName,
-  getMoviesByDate
+  getMoviesByDate,
+  addSubscription
 };
 
