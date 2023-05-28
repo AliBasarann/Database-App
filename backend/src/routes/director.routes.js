@@ -66,6 +66,9 @@ router.post("/movies",verifyToken, async (req, res) => {
             return res.status(400).send({message: "Bad Request!"});
         }
         const movie = await db.getMovieByMovieId(movie_id);
+        if (movie && movie.director_username != req.username) {
+            return res.status(400).send({message: "The movie does not belong to you!"});
+        }
         if (!movie) {
             if (!movie_name || !duration) {
                 return res.status(400).send({message:"Bad Request!"});
