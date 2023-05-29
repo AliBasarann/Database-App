@@ -78,7 +78,8 @@ router.post("/movies",verifyToken, async (req, res) => {
             }
             var genre;
             for (let i = 0; i<genres.length; i++) {
-                genre = db.getGenre(genres[i]);
+                genre = await db.getGenre(genres[i]);
+                console.log(genre);
                 if (!genre) {
                     return res.status(400).send({message: `${genres[i]} is not a valid genre id!`});
                 }
