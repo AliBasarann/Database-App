@@ -43,6 +43,9 @@ router.get("/theatres", verifyToken, async (req, res) => {
       console.log(theatres)
       return res.send(theatres);
     } catch(e) {
+      if(e.code == 22008){
+        return res.status(400).send({message: "Date should be in format YYYY-MM-DD!"});
+      }
       return res.status(500).send({message: e});
     }
 });
@@ -122,6 +125,9 @@ router.post("/precedes",verifyToken, async (req, res) => {
         const ancestor_movie_id = req.body.ancestor_movie_id;
         if (!predecessor_movie_id || !ancestor_movie_id) {
             return res.status(400).send({message:"Bad Request!"});
+        }
+        if(predecessor_movie_id == ancestor_movie_id){
+            return res.status(400).send({message: "Id's must be different"})
         }
         await db.addPredecessor(predecessor_movie_id, ancestor_movie_id)
         return res.send({message: "Predecessor is added successfully"});

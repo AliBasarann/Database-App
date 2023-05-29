@@ -78,11 +78,11 @@ const apidata = {
       ]
     }
   },
-  "Delete-User": {
-    name: "Delete User",
+  "Delete-Audience": {
+    name: "Delete Audience",
     postFunction: deleteAudience,
     form: {
-      buttonText: "Delete User",
+      buttonText: "Delete Audience",
       inputs: [
         {
           type: "text",
